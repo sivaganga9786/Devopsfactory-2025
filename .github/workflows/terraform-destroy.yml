@@ -1,7 +1,9 @@
 name: Terraform CI/CD - Destroy
 
 on:
-    workflow_dispatch:
+    push:
+      branches:
+        - feature/devops-2025
 
 jobs:
   terraform-destroy:
