@@ -64,11 +64,11 @@ jobs:
           AWS_DEFAULT_REGION: us-east-1
 
       - name: Wait for Approval Before Destroy
-        uses: peter-evans/approval-action@v2
+        uses: peter-evans/approval-action@v1
         with:
           approval-type: manual
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
       - name: Terraform Destroy
         run: |
