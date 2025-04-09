@@ -25,5 +25,5 @@ variable "availability_zone" {
   default     = "ap-south-1a"  # Set default to a supported zone
 }
 
-variable "AWS_ACCESS_KEY_ID" {}
-variable "AWS_SECRET_ACCESS_KEY" {}
+#variable "AWS_ACCESS_KEY_ID" {}
+#variable "AWS_SECRET_ACCESS_KEY" {}
