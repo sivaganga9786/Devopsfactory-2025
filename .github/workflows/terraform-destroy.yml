@@ -23,7 +23,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-          AWS_DEFAULT_REGION: us-east-1
+          region: us-east-1
 
       - name: Terraform Destroy
         run: |
@@ -31,8 +31,8 @@ jobs:
           terraform destroy -auto-approve \
             -var="access_key=${{ secrets.ACCESS_KEY }}" \
             -var="secret_key=${{ secrets.SECRET_KEY }}" \
-            -var="AWS_DEFAULT_REGION=us-east-1"
+            -var="region: us-east-1"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-          AWS_DEFAULT_REGION: us-east-1
+          region: us-east-1
