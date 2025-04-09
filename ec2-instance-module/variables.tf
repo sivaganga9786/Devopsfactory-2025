@@ -24,3 +24,6 @@ variable "availability_zone" {
   description = "The availability zone to launch the instance in"
   default     = "ap-south-1a"  # Set default to a supported zone
 }
+
+variable "AWS_ACCESS_KEY_ID" {}
+variable "AWS_SECRET_ACCESS_KEY" {}
