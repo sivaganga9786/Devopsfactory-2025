@@ -21,6 +21,18 @@ jobs:
         env:
             AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+            AWS_DEFAULT_REGION: us-east-1
+
+      - name: Debug AWS Environment Variables
+        run: |
+              echo "AWS Access Key: $AWS_ACCESS_KEY_ID"
+              echo "AWS Secret Key: $AWS_SECRET_ACCESS_KEY"
+              echo "AWS Region: $AWS_DEFAULT_REGION"
+        env:
+              AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+              AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+              AWS_DEFAULT_REGION: us-east-1
+
 
       - name: Terraform Init
         run: |
@@ -29,7 +41,8 @@ jobs:
         env:
             AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-            
+            AWS_DEFAULT_REGION: us-east-1
+
       - name: Terraform Plan
         run: |
              cd ec2-instance-module
@@ -37,6 +50,7 @@ jobs:
         env:
             AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+            AWS_DEFAULT_REGION: us-east-1
 
       - name: Terraform Apply
         run: |
@@ -45,3 +59,4 @@ jobs:
         env:
             AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+            AWS_DEFAULT_REGION: us-east-1
