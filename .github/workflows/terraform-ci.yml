@@ -18,7 +18,9 @@ jobs:
       - name: Check AWS Authentication
         run: |
           aws sts get-caller-identity
-
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
       - name: Terraform Init
         run: |
             cd ec2-instance-module
@@ -27,7 +29,10 @@ jobs:
       - name: Terraform Plan
         run: |
              cd ec2-instance-module
-             TF_LOG=DEBUG terraform plan
+             terraform plan
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
 
       - name: Terraform Apply
         run: |
