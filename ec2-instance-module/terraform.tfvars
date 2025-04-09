@@ -1,11 +1,7 @@
 ami               = "ami-084568db4383264d4" #"ami-08d8ac128e0a1b91c" ami-084568db4383264d4
 ec2_sg_name       = "ec2_sg"
 ec2_instance_name = "trivy_server"
-instance_type     = "t2.medium"
-
-
-
-
+instance_type     = "t3.micro"
 instance_count      = "1"
 region              = "us-east-1"
 vpc_cidr_block      = "10.0.0.0/16"
