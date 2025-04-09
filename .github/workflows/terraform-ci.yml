@@ -8,6 +8,7 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -15,54 +16,68 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
 
-      - name: Check AWS Authentication
+      - name: Terraform Init
         run: |
-          aws sts get-caller-identity
+          cd ec2-instance-module
+          terraform init
         env:
-            AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-            region: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
 
-      - name: Debug AWS Environment Variables
+      - name: Check for Terraform changes
+        id: changes
         run: |
-              echo "AWS Access Key: $AWS_ACCESS_KEY_ID"
-              echo "AWS Secret Key: $AWS_SECRET_ACCESS_KEY"
-              echo "AWS Region: $region"
-        env:
-              AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-              AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-              region: us-east-1
+          git diff --exit-code --quiet || echo "Terraform files changed"
 
+      - name: Terraform Apply
+        if: steps.changes.outputs.stdout != ''
+        run: |
+          cd ec2-instance-module
+          terraform apply -auto-approve \
+            -var="access_key=${{ secrets.ACCESS_KEY }}" \
+            -var="secret_key=${{ secrets.SECRET_KEY }}" \
+            -var="AWS_DEFAULT_REGION=us-east-1"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+
+  terraform-destroy:
+    runs-on: ubuntu-latest
+    needs: terraform
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init
         run: |
-            cd ec2-instance-module
-            terraform init
+          cd ec2-instance-module
+          terraform init
         env:
-            AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-            region: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
 
-      - name: Terraform Plan
-        run: |
-              cd ec2-instance-module
-              terraform plan \
-                -var="access_key=${{ secrets.ACCESS_KEY }}" \
-                -var="secret_key=${{ secrets.SECRET_KEY }}" \
-                -var="region=us-east-1"
+      - name: Wait for Approval Before Destroy
+        uses: peter-evans/approval-action@v1
+        with:
+          approval-type: manual
         env:
-              AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-              AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-              region: us-east-1
-    
-      - name: Terraform Apply
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Terraform Destroy
         run: |
-              cd ec2-instance-module
-              terraform apply -auto-approve \
-                -var="access_key=${{ secrets.ACCESS_KEY }}" \
-                -var="secret_key=${{ secrets.SECRET_KEY }}" \
-                -var="region=us-east-1"
+          cd ec2-instance-module
+          terraform destroy -auto-approve \
+            -var="access_key=${{ secrets.ACCESS_KEY }}" \
+            -var="secret_key=${{ secrets.SECRET_KEY }}" \
+            -var="AWS_DEFAULT_REGION=us-east-1"
         env:
-              AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-              AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-              region: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
