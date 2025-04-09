@@ -45,18 +45,24 @@ jobs:
 
       - name: Terraform Plan
         run: |
-             cd ec2-instance-module
-             terraform plan
+          cd ec2-instance-module
+          terraform plan \
+            -var="AWS_ACCESS_KEY_ID=${{ secrets.ACCESS_KEY }}" \
+            -var="AWS_SECRET_ACCESS_KEY=${{ secrets.SECRET_KEY }}" \
+            -var="AWS_DEFAULT_REGION=us-east-1"
         env:
-            AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-            AWS_DEFAULT_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
 
       - name: Terraform Apply
         run: |
-            cd ec2-instance-module
-            terraform apply -auto-approve
+          cd ec2-instance-module
+          terraform apply -auto-approve \
+            -var="AWS_ACCESS_KEY_ID=${{ secrets.ACCESS_KEY }}" \
+            -var="AWS_SECRET_ACCESS_KEY=${{ secrets.SECRET_KEY }}" \
+            -var="AWS_DEFAULT_REGION=us-east-1"
         env:
-            AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-            AWS_DEFAULT_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
