@@ -21,11 +21,15 @@ jobs:
         env:
             AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+
       - name: Terraform Init
         run: |
             cd ec2-instance-module
             terraform init
-
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+            
       - name: Terraform Plan
         run: |
              cd ec2-instance-module
