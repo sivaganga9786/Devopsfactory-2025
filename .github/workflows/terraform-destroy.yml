@@ -1,0 +1,36 @@
+name: Terraform CI/CD - Destroy
+
+on:
+    workflow_dispatch:
+
+jobs:
+  terraform-destroy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        run: |
+          cd ec2-instance-module
+          terraform init
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+
+      - name: Terraform Destroy
+        run: |
+          cd ec2-instance-module
+          terraform destroy -auto-approve \
+            -var="access_key=${{ secrets.ACCESS_KEY }}" \
+            -var="secret_key=${{ secrets.SECRET_KEY }}" \
+            -var="AWS_DEFAULT_REGION=us-east-1"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
