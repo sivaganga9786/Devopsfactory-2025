@@ -21,17 +21,17 @@ jobs:
         env:
             AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-            AWS_DEFAULT_REGION: us-east-1
+            region: us-east-1
 
       - name: Debug AWS Environment Variables
         run: |
               echo "AWS Access Key: $AWS_ACCESS_KEY_ID"
               echo "AWS Secret Key: $AWS_SECRET_ACCESS_KEY"
-              echo "AWS Region: $AWS_DEFAULT_REGION"
+              echo "AWS Region: $region"
         env:
               AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
               AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-              AWS_DEFAULT_REGION: us-east-1
+              region: us-east-1
 
 
       - name: Terraform Init
@@ -41,7 +41,7 @@ jobs:
         env:
             AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-            AWS_DEFAULT_REGION: us-east-1
+            region: us-east-1
 
       - name: Terraform Plan
         run: |
@@ -49,11 +49,11 @@ jobs:
               terraform plan \
                 -var="access_key=${{ secrets.ACCESS_KEY }}" \
                 -var="secret_key=${{ secrets.SECRET_KEY }}" \
-                -var="AWS_DEFAULT_REGION=us-east-1"
+                -var="region=us-east-1"
         env:
               AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
               AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-              AWS_DEFAULT_REGION: us-east-1
+              region: us-east-1
     
       - name: Terraform Apply
         run: |
@@ -61,8 +61,8 @@ jobs:
               terraform apply -auto-approve \
                 -var="access_key=${{ secrets.ACCESS_KEY }}" \
                 -var="secret_key=${{ secrets.SECRET_KEY }}" \
-                -var="AWS_DEFAULT_REGION=us-east-1"
+                -var="region=us-east-1"
         env:
               AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
               AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-              AWS_DEFAULT_REGION: us-east-1
+              region: us-east-1
