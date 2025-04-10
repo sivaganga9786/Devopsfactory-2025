@@ -86,7 +86,8 @@ resource "aws_instance" "ec2_instance" {
   instance_type          = var.instance_type
   subnet_id              = aws_subnet.public.id  # Ensure this is a public subnet
   security_groups        = [aws_security_group.ec2_sg.id]
-  key_name               = aws_key_pair.key_pair.key_name
+ # key_name               = aws_key_pair.key_pair.key_name
+  key_name               = "terraform_keypai"
   associate_public_ip_address = true  # This is crucial for public IP assignment
   user_data = var.user_data
   tags = {
