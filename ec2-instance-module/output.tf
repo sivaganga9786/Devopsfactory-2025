@@ -23,15 +23,15 @@ output "igw_id" {
 
 # outputs.tf in the root module
 
-output "ec2_instance_ids" {
-  description = "The IDs of the EC2 instances from the module"
-  value       = module.vpc_module.ec2_instance_ids
-}
+# output "ec2_instance_ids" {
+#   description = "The IDs of the EC2 instances from the module"
+#   value       = module.vpc_module.ec2_instance_ids
+# }
 
-output "ec2_public_ips" {
-  description = "The public IP addresses of the EC2 instances from the module"
-  value       = module.vpc_module.ec2_public_ips
-}
+# output "ec2_public_ips" {
+#   description = "The public IP addresses of the EC2 instances from the module"
+#   value       = module.vpc_module.ec2_public_ips
+# }
 
 
 
