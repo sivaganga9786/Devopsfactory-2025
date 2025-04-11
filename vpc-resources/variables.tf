@@ -55,6 +55,13 @@ variable "key_name" {
   description = "Name of the SSH key pair"
   default = "terraform_keypair"
 }
+variable "ec2_instance_name" {
+  type = string
+}
+
+variable "user_data" {
+  type = string
+}
 
 
 
