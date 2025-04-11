@@ -1,9 +1,9 @@
 name: Terraform CI/CD
 
-on:
-  push:
-    branches:
-      - feature/devops-2025
+# on:
+#   push:
+#     branches:
+#       - feature/devops-2025
 
 jobs:
   terraform:
