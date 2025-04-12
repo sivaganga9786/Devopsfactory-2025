@@ -1,5 +1,5 @@
 module "vpc" {
-  source              = "../../resources/vpc"
+  source              = "../resources/vpc"
   vpc_cidr            = var.vpc_cidr
   vpc_name            = var.vpc_name
   private_subnet_cidr = var.private_subnet_cidr
@@ -9,7 +9,7 @@ module "vpc" {
 }
 
 module "ec2" {
-  source         = "../../resources/ec2"
+  source         = "../resources/ec2"
   instances      = var.instances
   subnet_id      = module.vpc.public_subnets[0]
   key_name       = var.key_name
