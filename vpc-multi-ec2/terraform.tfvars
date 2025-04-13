@@ -26,7 +26,4 @@ instances = [
     role          = "sonarqube.sh"
   }
 ]
-
-
-
 ec2_sg_name = "Terraform-EC2-SG"
