@@ -8,10 +8,9 @@ exec > /var/log/trivy-data.log 2>&1
 set -xe
 
 
-
-# Install Java 8, Java 11 & Docker
+# Install Java 8, Java 11  Java 17 & Docker
 sudo apt update
-sudo apt install -y openjdk-8-jdk openjdk-11-jdk docker.io maven
+sudo apt install -y openjdk-8-jdk openjdk-11-jdk docker.io maven openjdk-17-jdk
 sudo usermod -a -G docker ubuntu
 
 # Install Trivy
