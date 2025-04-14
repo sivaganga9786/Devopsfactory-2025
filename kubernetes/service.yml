@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: terraform_cd
+  name: terraformdemo
   labels:
-    app: terraform_cd
+    app: terraformdemo
 spec:
   type: NodePort
   ports:
@@ -11,4 +11,4 @@ spec:
     targetPort: 8080
     nodePort: 31000
   selector:
-    app: terraform_cd
+    app: terraformdemo
