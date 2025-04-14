@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: terraform_cd
+  labels:
+    app: terraform_cd
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: terraform_cd
+  template:
+    metadata:
+      labels:
+        app: terraform_cd
+    spec:
+      containers:
+      - name: terraform_cd
+        image: sivaganesh07/terraformci:latest
+        ports:
+        - containerPort: 8080
