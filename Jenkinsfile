@@ -75,14 +75,18 @@ pipeline {
         sh "trivy image --scanners vuln --offline-scan sivaganesh07/terraformci:latest > trivyresults.txt"
         }
     }
-          
+
    stage('Stage VIII: Smoke Test ') {
       steps { 
         echo "Smoke Test the Image"
         sh "docker run -d --name smokerun -p 8080:8080 sivaganesh07/terraformci"
-        sh "sleep 90; ./check.sh"
+        sh '''
+          chmod +x check.sh
+          sleep 90
+          ./check.sh
+        '''
         sh "docker rm --force smokerun"
-        }
+      }
     }
 
   }
