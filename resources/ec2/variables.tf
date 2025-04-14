@@ -19,3 +19,6 @@ variable "vpc_id" {
   description = "The ID of the VPC where EC2 and its security group will be created"
   type        = string
 }
+variable "volume_size" {
+  default = 8
+}

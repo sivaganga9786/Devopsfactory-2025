@@ -8,7 +8,9 @@ variable "secret_key" {
   default = "us-east-1"
 }
 
-
+variable "volume_size" {
+  default = 8
+}
 
 variable "vpc_cidr" {}
 variable "vpc_name" {}

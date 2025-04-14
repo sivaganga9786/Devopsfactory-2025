@@ -14,6 +14,7 @@ module "ec2" {
   subnet_id      = module.vpc.public_subnets[0]
   key_name       = var.key_name
   ec2_sg_name    = var.ec2_sg_name
+  volume_size   = var.volume_size
   vpc_id     = module.vpc.vpc_id
   user_data      = [
     file("${path.module}/jenkins.sh"),

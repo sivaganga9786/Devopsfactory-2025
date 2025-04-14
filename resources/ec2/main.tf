@@ -30,7 +30,12 @@ resource "aws_instance" "ec2" {
   user_data     = element(var.user_data, count.index)
   security_groups        = [aws_security_group.ec2_sg.id]
   key_name      = var.key_name
-
+  # Increase root volume size to 20 GB
+  root_block_device {
+    volume_size = var.volume_size              # Size in GB
+    volume_type = "gp2"             # General Purpose SSD (can be gp3, io1, etc.)
+    delete_on_termination = true
+  }
   tags = {
     Name = var.instances[count.index].name
   }

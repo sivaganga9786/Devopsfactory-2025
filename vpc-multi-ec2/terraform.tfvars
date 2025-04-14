@@ -27,3 +27,4 @@ instances = [
   }
 ]
 ec2_sg_name = "Terraform-EC2-SG"
+volume_size = 20
