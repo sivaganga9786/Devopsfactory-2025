@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: terraformdemo
-        image: sivaganesh07/terraformci:latest
+        image: sivaganesh07/wezvatechbackend:1
         ports:
         - containerPort: 8080
