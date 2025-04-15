@@ -24,6 +24,12 @@ instances = [
     ami           = "ami-084568db4383264d4"
     instance_type = "t2.medium"
     role          = "sonarqube.sh"
+  },  
+  {
+    name          = "Minikube"
+    ami           = "ami-084568db4383264d4"
+    instance_type = "t2.medium"
+    role          = "minikube.sh"
   }
 ]
 ec2_sg_name = "Terraform-EC2-SG"

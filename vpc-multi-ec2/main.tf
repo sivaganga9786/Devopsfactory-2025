@@ -20,5 +20,6 @@ module "ec2" {
     file("${path.module}/jenkins.sh"),
     file("${path.module}/build.sh"),
     file("${path.module}/sonarqube.sh"),
+    file("${path.module}/minikube.sh")
   ]
 }
