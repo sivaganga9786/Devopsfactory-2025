@@ -76,10 +76,14 @@ pipeline {
    stage('Stage VIII: Smoke Test ') {
       steps { 
         echo "Smoke Test the Image"
-        sh "docker run -d --name smokerun -p 8080:8080 sivaganesh07/terraformci:$BUILD_NUMBER"
-        sh "sleep 90; ./check.sh"
+        sh "docker run -d --name smokerun -p 8080:8080 sivaganesh07/terraformci"
+        sh '''
+          chmod +x check.sh
+          sleep 90
+          ./check.sh
+        '''
         sh "docker rm --force smokerun"
-        }
+      }
     }
 
    stage('Stage IX: Trigger Deployment'){
@@ -92,7 +96,7 @@ pipeline {
       }
     }
    
-   
+
   }
 }
 
