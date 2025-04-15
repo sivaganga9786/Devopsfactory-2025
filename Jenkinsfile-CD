@@ -1,28 +1,22 @@
 pipeline {
-    agent { label 'build' }
-
-    parameters {
-        string(name: 'IMAGETAG', defaultValue: '1', description: 'Enter Image Tag to Deploy')
+ agent { label 'build' }
+ parameters {
+     password(name: 'PASSWD', defaultValue: '', description: 'Please Enter your Github password')
+     string(name: 'IMAGETAG', defaultValue: '1', description: 'Please Enter the Image Tag to Deploy?')
+ }
+ stages {
+  stage('Deploy')
+  {
+    steps { 
+        git branch: 'feature/terraform-ci', credentialsId: '', url: 'https://github.com/sivaganga9786/Devopsfactory-2025.git'
+      dir ("./kubernetes") {
+              sh "sed -i 's/image: sivaganesh07.*/image: sivaganesh07\\/wezvatechbackend:$IMAGETAG/g' deployment.yml" 
+	    }
+	    sh 'git commit -a -m "New deployment for Build $IMAGETAG"'
+	    sh "git push https://sivaganga9786:$PASSWD@github.com/sivaganga9786/Devopsfactory-2025.git"
     }
-
-    stages {
-        stage('Deploy') {
-            steps {
-                git branch: 'feature/terraform-ci', credentialsId: 'github-cred', url: 'https://github.com/sivaganga9786/Devopsfactory-2025.git'
-
-                dir('./kubernetes') {
-                    sh "sed -i 's|image: sivaganesh07.*|image: sivaganesh07/terraformbackend:${IMAGETAG}|' deployment.yml"
-                }
-
-                sh 'git config user.email "ci@example.com"'
-                sh 'git config user.name "ci-user"'
-                sh "git commit -a -m 'New deployment for Build ${IMAGETAG}'"
-
-                withCredentials([usernamePassword(credentialsId: 'github-user-pass', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
-                    sh 'git push https://${GIT_USER}:${GIT_PASS}@github.com/sivaganga9786/Devopsfactory-2025.git'
-                }
-            }
-        }
-    }
+  }
+ }
 }
+
 
