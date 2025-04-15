@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git branch: 'feature/terraform-ci', credentialsId: 'github_cred', url: 'https://github.com/sivaganga9786/Devopsfactory-2025.git'
+        git branch: 'feature/terraform-ci', credentialsId: 'githubtoken', url: 'https://github.com/sivaganga9786/Devopsfactory-2025.git'
       }
     }
   
