@@ -10,9 +10,9 @@ module "vpc_module" {
   instance_type       = var.instance_type
   ec2_instance_name   = var.ec2_instance_name
   #user_data = file("${path.module}/sonarqube.sh")
- # user_data = file("${path.module}/jenkins.sh")
+  user_data = file("${path.module}/jenkins.sh")
   #user_data = file("${path.module}/trivy.sh")
-  user_data = file("${path.module}/minikube.sh")
+  #user_data = file("${path.module}/minikube.sh")
 }
 
 # module "vpc_module" {
