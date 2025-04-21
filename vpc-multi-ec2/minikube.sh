@@ -1,6 +1,6 @@
-
 #!/bin/bash
-# Sample Soanrqube
+# Sample Minikube
+
 exec > /var/log/user-data.log 2>&1
 set -xe
 
