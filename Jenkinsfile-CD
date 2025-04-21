@@ -1,75 +1,23 @@
-// pipeline {
-//  agent { label 'build' }
-//  parameters {
-//      password(name: 'PASSWD', defaultValue: '', description: 'Please Enter your Github password')
-//      string(name: 'IMAGETAG', defaultValue: '1', description: 'Please Enter the Image Tag to Deploy?')
-//  }
-//  stages {
-//   stage('Deploy')
-//   {
-//     steps { 
-//         git branch: 'feature/terraform-ci', credentialsId: '', url: 'https://github.com/sivaganga9786/Devopsfactory-2025.git'
-//       dir ("./kubernetes") {
-//               sh "sed -i 's/image: sivaganesh07.*/image: sivaganesh07\\/agguci:$IMAGETAG/g' deployment.yml" 
-// 	    }
-// 	    sh 'git commit -a -m "New deployment for Build $IMAGETAG"'
-// 	    sh "git push https://sivaganga9786:$PASSWD@github.com/sivaganga9786/Devopsfactory-2025.git"
-//     }
-//   }
-//  }
-// }
-
-
 pipeline {
-  agent { label 'build' }
-
-  // These parameters are only shown when triggered manually
-  parameters {
-    password(name: 'PASSWD', defaultValue: '', description: 'Please Enter your GitHub password')
-    string(name: 'IMAGETAG', defaultValue: '1', description: 'Please Enter the Image Tag to Deploy')
-  }
-
-  environment {
-    GIT_PASS = "${params.PASSWD}"
-    IMAGE_TAG = "${params.IMAGETAG}"
-    REPO_URL = 'https://github.com/sivaganga9786/Devopsfactory-2025.git'
-    BRANCH_NAME = 'feature/terraform-ci'
-  }
-
-  stages {
-    stage('Checkout Code') {
-      steps {
-        git branch: "${BRANCH_NAME}", credentialsId: 'GitlabCred', url: "${REPO_URL}"
-      }
-    }
-
-    stage('Update Deployment YAML') {
-      steps {
-        dir('kubernetes') {
-          sh '''
-            echo "[INFO] Before:"
-            grep "image:" deployment.yml || true
-
-            sed -i "s|image: sivaganesh07.*|image: sivaganesh07/terraformci:${IMAGE_TAG}|g" deployment.yml
-
-            echo "[INFO] After:"
-            grep "image:" deployment.yml || true
-          '''
-        }
-      }
-    }
-
-    stage('Push Changes to GitHub') {
-      steps {
-        sh '''
-          git config user.email "jenkins@example.com"
-          git config user.name "Jenkins"
-
-          git add kubernetes/deployment.yml
-          git commit -m "CD: Deploying image tag ${IMAGE_TAG}"
-          git push https://sivaganga9786:${GIT_PASS}@github.com/sivaganga9786/Devopsfactory-2025.git
-        '''
-      }
+ agent { label 'build' }
+ parameters {
+     password(name: 'PASSWD', defaultValue: '', description: 'Please Enter your Github password')
+     string(name: 'IMAGETAG', defaultValue: '1', description: 'Please Enter the Image Tag to Deploy?')
+ }
+ stages {
+  stage('Deploy')
+  {
+    steps { 
+        git branch: 'feature/terraform-ci', credentialsId: '', url: 'https://github.com/sivaganga9786/Devopsfactory-2025.git'
+      dir ("./kubernetes") {
+              sh "sed -i 's/image: sivaganesh07.*/image: sivaganesh07\\/agguci:$IMAGETAG/g' deployment.yml" 
+	    }
+	    sh 'git commit -a -m "New deployment for Build $IMAGETAG"'
+	    sh "git push https://sivaganga9786:$PASSWD@github.com/sivaganga9786/Devopsfactory-2025.git"
     }
   }
+ }
 }
+
+
+
