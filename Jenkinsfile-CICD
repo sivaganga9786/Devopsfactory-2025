@@ -91,7 +91,7 @@ pipeline {
        script {
         TAG = "$BUILD_NUMBER"
          echo "Trigger CD Pipeline"
-          build wait: false, job: 'terraform-cd-pipeline', parameters: [password(name: 'PASSWD', description: 'Please Enter your Gitlab password', value: params.PASSWD),string(name: 'IMAGETAG', value: TAG)]
+          build wait: false, job: 'terraform-cd', parameters: [password(name: 'PASSWD', description: 'Please Enter your Gitlab password', value: params.PASSWD),string(name: 'IMAGETAG', value: TAG)]
        }
       }
     }
