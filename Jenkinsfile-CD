@@ -1,9 +1,39 @@
+// pipeline {
+//  agent { label 'build' }
+//  parameters {
+//      password(name: 'PASSWD', defaultValue: '', description: 'Please Enter your Github password')
+//      string(name: 'IMAGETAG', defaultValue: '1', description: 'Please Enter the Image Tag to Deploy?')
+//  }
+//  stages {
+//   stage('Deploy')
+//   {
+//     steps { 
+//         git branch: 'feature/terraform-ci', credentialsId: '', url: 'https://github.com/sivaganga9786/Devopsfactory-2025.git'
+//       dir ("./kubernetes") {
+//               sh "sed -i 's/image: sivaganesh07.*/image: sivaganesh07\\/agguci:$IMAGETAG/g' deployment.yml" 
+// 	    }
+// 	    sh 'git commit -a -m "New deployment for Build $IMAGETAG"'
+// 	    sh "git push https://sivaganga9786:$PASSWD@github.com/sivaganga9786/Devopsfactory-2025.git"
+//     }
+//   }
+//  }
+// }
+
+
+
+
+
 pipeline {
  agent { label 'build' }
  parameters {
-     password(name: 'PASSWD', defaultValue: '', description: 'Please Enter your Github password')
-     string(name: 'IMAGETAG', defaultValue: '1', description: 'Please Enter the Image Tag to Deploy?')
+     string(name: 'IMAGETAG', defaultValue: 'latest', description: 'Please Enter the Image Tag to Deploy?')
  }
+environment {
+    IMAGETAG = '$IMAGETAG'
+    PASSWD = credentials('github') // Jenkins should store a secret text or username/password
+}
+
+
  stages {
   stage('Deploy')
   {
@@ -18,6 +48,5 @@ pipeline {
   }
  }
 }
-
 
 
