@@ -2,7 +2,7 @@
 pipeline {
   agent { label 'build' }
    environment { 
-        registry = "sivaganesh07/terraformci" 
+        registry = "sivaganesh07/agguci" 
         registryCredential = 'dockerhub' 
    }
 
@@ -72,14 +72,14 @@ pipeline {
    stage('Stage VII: Scan Image ') {
       steps { 
         echo "Scanning Image for Vulnerabilities"
-        sh "trivy image --scanners vuln --offline-scan sivaganesh07/terraformci:latest > trivyresults.txt"
+        sh "trivy image --scanners vuln --offline-scan sivaganesh07/agguci:latest > trivyresults.txt"
         }
     }
 
    stage('Stage VIII: Smoke Test ') {
       steps { 
         echo "Smoke Test the Image"
-        sh "docker run -d --name smokerun -p 8080:8080 sivaganesh07/terraformci"
+        sh "docker run -d --name smokerun -p 8080:8080 sivaganesh07/agguci"
         sh '''
           chmod +x check.sh
           sleep 90

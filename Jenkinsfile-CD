@@ -10,7 +10,7 @@ pipeline {
     steps { 
         git branch: 'feature/terraform-ci', credentialsId: '', url: 'https://github.com/sivaganga9786/Devopsfactory-2025.git'
       dir ("./kubernetes") {
-              sh "sed -i 's/image: sivaganesh07.*/image: sivaganesh07\\/terraformcicd:$IMAGETAG/g' deployment.yml" 
+              sh "sed -i 's/image: sivaganesh07.*/image: sivaganesh07\\/terraformci:$IMAGETAG/g' deployment.yml" 
 	    }
 	    sh 'git commit -a -m "New deployment for Build $IMAGETAG"'
 	    sh "git push https://sivaganga9786:$PASSWD@github.com/sivaganga9786/Devopsfactory-2025.git"
