@@ -1,7 +1,7 @@
 pipeline {
   agent { label 'build' }
    environment { 
-        registry = "sivaganesh07/terraformci" 
+        registry = "sivaganesh07/agguci" 
         registryCredential = 'dockerhub' 
    }
    parameters {
@@ -69,14 +69,14 @@ pipeline {
    stage('Stage VII: Scan Image ') {
       steps { 
         echo "Scanning Image for Vulnerabilities"
-        sh "trivy image --scanners vuln --offline-scan sivaganesh07/terraformci:$BUILD_NUMBER > trivyresults.txt"
+        sh "trivy image --scanners vuln --offline-scan sivaganesh07/agguci:$BUILD_NUMBER > trivyresults.txt"
         }
     }
           
    stage('Stage VIII: Smoke Test ') {
       steps { 
         echo "Smoke Test the Image"
-        sh "docker run -d --name smokerun -p 8080:8080 sivaganesh07/terraformci"
+        sh "docker run -d --name smokerun -p 8080:8080 sivaganesh07/agguci"
         sh '''
           chmod +x check.sh
           sleep 90
@@ -91,7 +91,7 @@ pipeline {
        script {
         TAG = "$BUILD_NUMBER"
          echo "Trigger CD Pipeline"
-          build wait: false, job: 'terraform-cd', parameters: [password(name: 'PASSWD', description: 'Please Enter your Gitlab password', value: params.PASSWD),string(name: 'IMAGETAG', value: TAG)]
+          build wait: false, job: 'terraform-cd', parameters: [password(name: 'PASSWD', description: 'Please Enter your Github password', value: params.PASSWD),string(name: 'IMAGETAG', value: TAG)]
        }
       }
     }
